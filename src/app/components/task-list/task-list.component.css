@@ -1,0 +1,218 @@
+/*.task-container {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  margin: 20px;*/
+/*}*/
+
+/*.task-list {*/
+/*  width: 30%;*/
+/*  padding: 10px;*/
+/*  border: 1px solid #ccc;*/
+/*  min-height: 300px;*/
+/*}*/
+
+/*.task-item {*/
+/*  padding: 10px;*/
+/*  margin: 5px 0;*/
+/*  border: 1px solid #ccc;*/
+/*  background-color: #f9f9f9;*/
+/*  cursor: move;*/
+/*}*/
+
+/*h2 {*/
+/*  text-align: center;*/
+/*}*/
+
+/*.task-list {*/
+/*  min-height: 200px;*/
+/*  border: 1px dashed #ccc;*/
+/*  padding: 10px;*/
+/*  margin: 10px 0;*/
+/*}*/
+
+/*.task-card {*/
+/*  margin: 5px 0;*/
+/*  padding: 10px;*/
+/*  background: #f5f5f5;*/
+/*  cursor: move;*/
+/*}*/
+
+/*.task-card:hover {*/
+/*  background: #e0e0e0;*/
+/*}*/
+
+.task-board-container {
+  padding: 20px;
+  height: 100vh;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.status-columns-container {
+  display: flex;
+  gap: 16px;
+  height: calc(100% - 80px);
+}
+
+.status-column {
+  flex: 1;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+  }
+
+  .task-count {
+    color: #666;
+    font-size: 0.9em;
+  }
+}
+
+.task-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.task-card {
+  background: white;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  &.cdk-drag-preview {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+}
+
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    margin-bottom: 16px;
+  }
+}
+
+/* Drag and drop styling */
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.task-card {
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+
+  &.priority-low {
+    border-left: 4px solid #4CAF50;
+  }
+
+  &.priority-medium {
+    border-left: 4px solid #FFC107;
+  }
+
+  &.priority-high {
+    border-left: 4px solid #F44336;
+  }
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.priority-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+
+  .priority-low & {
+    background: #E8F5E9;
+    color: #2E7D32;
+  }
+
+  .priority-medium & {
+    background: #FFF8E1;
+    color: #FF8F00;
+  }
+
+  .priority-high & {
+    background: #FFEBEE;
+    color: #C62828;
+  }
+}
+
+.assignee-info {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .assignee-details {
+    display: flex;
+    flex-direction: column;
+
+    .assignee-name {
+      font-weight: 500;
+    }
+
+    .assignee-email {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+}
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}

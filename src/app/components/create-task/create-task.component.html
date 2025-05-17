@@ -1,0 +1,19 @@
+<div>
+  <h2>Create Task</h2>
+  <form (ngSubmit)="createTask()">
+    <label for="name">Task Name:</label>
+    <input id="name" [(ngModel)]="task.name" name="name" required>
+
+    <label for="description">Description:</label>
+    <input id="description" [(ngModel)]="task.description" name="description">
+
+    <label for="status">Status:</label>
+    <select id="status" [(ngModel)]="task.status" name="status">
+      <option value="todo">To Do</option>
+      <option value="in-progress">In Progress</option>
+      <option value="completed">Completed</option>
+    </select>
+
+    <button type="submit">Create Task</button>
+  </form>
+</div>
