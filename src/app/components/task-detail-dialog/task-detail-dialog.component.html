@@ -1,20 +1,51 @@
-<h2>Task Details</h2>
-<form (ngSubmit)="updateTask()">
-  <label for="name">Task Name:</label>
-  <input id="name" [(ngModel)]="task.name" name="name" required>
+<div class="task-popup-container">
+  <h2 class="popup-header">Task Details</h2>
 
-  <label for="description">Description:</label>
-  <input id="description" [(ngModel)]="task.description" name="description">
+  <form (ngSubmit)="updateTask()" class="task-form">
+    <div class="form-group">
+      <label for="name" class="form-label">Task Name</label>
+      <input id="name" [(ngModel)]="task.name" name="name" required class="form-input">
+    </div>
 
-  <label for="status">Status:</label>
-  <select id="status" [(ngModel)]="task.status" name="status">
-    <option value="todo">To Do</option>
-    <option value="in-progress">In Progress</option>
-    <option value="completed">Completed</option>
-  </select>
+    <div class="form-group">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" [(ngModel)]="task.description" name="description"
+                class="form-textarea" rows="3"></textarea>
+    </div>
 
-  <button type="submit">Update Task</button>
-  <button type="button" (click)="close()">Cancel</button>
-  <!-- เพิ่มปุ่มลบ -->
-  <button type="button" (click)="openConfirmDialog()">Delete Task</button>
-</form>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" [(ngModel)]="task.status" name="status" class="form-select">
+          <option value="todo">To Do</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="priority" class="form-label">Priority</label>
+        <select id="priority" [(ngModel)]="task.priority" name="priority" class="form-select">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="AssignedToID" class="form-label">Assign To</label>
+      <select id="AssignedToID" [(ngModel)]="task.assigned_to_id" name="AssignedToID" class="form-select">
+        <option *ngFor="let user of users" [value]="user.ID">
+          {{ user.username }}
+        </option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary">Update Task</button>
+      <button type="button" (click)="close()" class="btn btn-secondary">Cancel</button>
+      <button type="button" (click)="openConfirmDialog()" class="btn btn-danger">Delete Task</button>
+    </div>
+  </form>
+</div>

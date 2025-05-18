@@ -1,20 +1,31 @@
-<div class="app-container">
+<div class="app-container background-container">
   <!-- Navigation -->
-  <nav class="navbar" *ngIf="authService">
+  <nav class="navbar" *ngIf="authService && authService.isLoggedIn()">
     <div class="nav-brand">Task Manager</div>
     <div class="nav-links">
-      <a routerLink="/tasks" *ngIf="authService.isLoggedIn()">
-        <i class="fas fa-tasks"></i> My Tasks
-      </a>
-      <a routerLink="/register" *ngIf="!authService.isLoggedIn()">
-        <i class="fas fa-user-plus"></i> Register
-      </a>
-      <a routerLink="/login" *ngIf="!authService.isLoggedIn()">
-        <i class="fas fa-sign-in-alt"></i> Login
-      </a>
-      <button *ngIf="authService.isLoggedIn()" (click)="authService.logout()">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
+      <!-- แสดงเมนูเมื่อล็อกอินแล้ว -->
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <a routerLink="/tasks">
+          <i class="fas fa-tasks"></i> My Tasks
+        </a>
+
+        <!-- เพิ่มปุ่ม Notification ตรงนี้ -->
+        <app-notification-bell></app-notification-bell>
+
+        <button (click)="authService.logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </ng-container>
+
+      <!-- แสดงเมนูเมื่อยังไม่ได้ล็อกอิน -->
+<!--      <ng-container *ngIf="!authService.isLoggedIn()">-->
+<!--        <a routerLink="/register">-->
+<!--          <i class="fas fa-user-plus"></i> Register-->
+<!--        </a>-->
+<!--        <a routerLink="/login">-->
+<!--          <i class="fas fa-sign-in-alt"></i> Login-->
+<!--        </a>-->
+<!--      </ng-container>-->
     </div>
   </nav>
 
@@ -25,6 +36,6 @@
 
   <!-- Footer -->
   <footer>
-    &copy; 2023 Task Manager
+    &copy; 2025 Task Manager
   </footer>
 </div>

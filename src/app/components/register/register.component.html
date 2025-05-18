@@ -1,67 +1,71 @@
 <div class="register-container">
-  <h2>Register</h2>
+  <div class="register-form">
+    <h2>Register</h2>
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input
-        type="text"
-        id="username"
-        formControlName="username"
-        [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
 
-      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error-message">
-        <div *ngIf="registerForm.get('username')?.errors?.['required']">
-          Username is required
-        </div>
-        <div *ngIf="registerForm.get('username')?.errors?.['minlength']">
-          Username must be at least 3 characters
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-
-      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
-        <div *ngIf="registerForm.get('password')?.errors?.['required']">
-          Password is required
-        </div>
-        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
-          Password must be at least 6 characters
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error-message">
+          <div *ngIf="registerForm.get('username')?.errors?.['required']">
+            Username is required
+          </div>
+          <div *ngIf="registerForm.get('username')?.errors?.['minlength']">
+            Username must be at least 3 characters
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="confirmPassword">Confirm Password</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        formControlName="confirmPassword"
-        [class.is-invalid]="(registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['mismatch']) && registerForm.get('confirmPassword')?.touched">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
 
-      <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched" class="error-message">
-        Passwords do not match
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+          <div *ngIf="registerForm.get('password')?.errors?.['required']">
+            Password is required
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+            Password must be at least 6 characters
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [class.is-invalid]="(registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['mismatch']) && registerForm.get('confirmPassword')?.touched">
 
-    <button type="submit" class="btn btn-primary" [disabled]="isLoading || registerForm.invalid">
-      <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      {{ isLoading ? 'Registering...' : 'Register' }}
-    </button>
+        <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched" class="error-message">
+          Passwords do not match
+        </div>
+      </div>
 
-    <div class="login-link">
-      Already have an account? <a routerLink="/login">Login here</a>
-    </div>
-  </form>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isLoading || registerForm.invalid">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        {{ isLoading ? 'Registering...' : 'Register' }}
+      </button>
+
+      <div class="login-link">
+        Already have an account?
+        <a [routerLink]="['/login']">Login here</a>
+      </div>
+    </form>
+  </div>
+
 </div>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { AuthService } from './services/auth.service'; // ตรวจสอบ path ให้ถูกต้อง
+import { AuthService } from './services/auth.service';
+import {NotificationBellComponent} from './components/notification-bell/notification-bell.component'; // ตรวจสอบ path ให้ถูกต้อง
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { AuthService } from './services/auth.service'; // ตรวจสอบ 
   imports: [
     CommonModule,
     RouterOutlet,
-    RouterModule
+    RouterModule,
+    NotificationBellComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

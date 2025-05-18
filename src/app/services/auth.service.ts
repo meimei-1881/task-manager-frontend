@@ -19,14 +19,14 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {
     // Check if running in browser environment
     if (typeof window !== 'undefined') {
-      return !!window.localStorage.getItem('token');
+      return !!window.localStorage.getItem('authToken');
     }
     return false;
   }

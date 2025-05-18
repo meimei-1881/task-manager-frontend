@@ -1,0 +1,77 @@
+.confirm-dialog {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  /*width: 400px;*/
+  max-width: 90vw;
+  text-align: center;
+}
+
+.dialog-header {
+  margin-bottom: 16px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  color: #e74c3c;
+  font-size: 1.4rem;
+}
+
+.dialog-content {
+  margin: 20px 0;
+}
+
+.warning-icon {
+  width: 48px;
+  height: 48px;
+  color: #e74c3c;
+  margin-bottom: 12px;
+}
+
+.dialog-content p {
+  margin: 8px 0;
+  color: #34495e;
+  font-size: 1rem;
+}
+
+.warning-note {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  min-width: 100px;
+}
+
+.btn-secondary {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+}
+
+.btn-secondary:hover {
+  background-color: #bdc3c7;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}

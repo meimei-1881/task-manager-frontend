@@ -1,3 +1,11 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden; /* ป้องกัน scroll แนวนอน */
+}
+
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -42,5 +50,41 @@
 
 main {
   flex: 1;
-  padding: 2rem;
+  /*padding: 2rem;*/
+  align-content: center;
+  align-self: center;
+  width: 100%;
+  text-align: -webkit-center;
+  padding: 1% 10%;
 }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+
+  app-notification-bell {
+    margin-left: auto;
+  }
+
+  button[mat-icon-button] {
+    margin-left: 0; /* ลบ margin ของปุ่มถ้ามี */
+  }
+}
+
+.background-container {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url('../assets/bg.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* 👇 สำคัญมาก */
+  min-height: 100vh;
+  /*height: 100%;*/
+  height: 100dvh; /* ✅ รองรับ iOS Safari ใหม่ */
+  width: 100vw;
+  overflow: hidden;
+}
+

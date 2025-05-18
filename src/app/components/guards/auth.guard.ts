@@ -1,29 +1,25 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  constructor(private router: Router) {}
 
-  canActivate(): boolean {
-    // ตรวจสอบว่าเป็น Browser Environment
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    // ตรวจสอบว่า user login หรือไม่
+    const isLoggedIn = localStorage.getItem('authToken');  // ตรวจสอบ token ใน localStorage
 
-      if (token) {
-        return true;
-      } else {
-        this.router.navigate(['/login']);
-        return false;
-      }
+    if (isLoggedIn) {
+      // ถ้า login แล้วให้ไปที่หน้าต่อไป
+      return true;
     } else {
-      // กรณีไม่ใช่ Browser (เช่น Server-Side)
+      // ถ้าไม่ได้ login, ไปหน้า login
       this.router.navigate(['/login']);
       return false;
     }

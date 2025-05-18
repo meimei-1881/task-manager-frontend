@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
 import { TaskService } from '../../services/task.service';
 import {CdkDrag, CdkDragDrop, CdkDropList} from '@angular/cdk/drag-drop';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
@@ -8,6 +7,10 @@ import {TaskDetailDialogComponent} from '../task-detail-dialog/task-detail-dialo
 import { ChangeDetectorRef } from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import {TaskFormComponent} from '../app-task-form/task-form.component';
+import {MatButton} from '@angular/material/button';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 interface Task {
   ID: number;
@@ -26,16 +29,32 @@ interface Task {
     MatIcon,
     NgClass,
     CommonModule,
+    MatButton,
   ],
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
   tasks: any[] = [];
+  private routeSub: Subscription = new Subscription();  // กำหนดค่าเริ่มต้นให้ routeSub
 
-  constructor(private taskService: TaskService, private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
+  constructor(private taskService: TaskService, private dialog: MatDialog, private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    // เรียกใช้ฟังก์ชันเพื่อโหลด tasks เมื่อเริ่มต้น
     this.loadTasks();
+
+    // ตรวจสอบ queryParams เพื่อรีเฟรชข้อมูล
+    this.routeSub = this.activatedRoute.queryParams.subscribe(params => {
+      if (params['refresh']) {
+        this.loadTasks(); // รีเฟรชเมื่อ queryParams เปลี่ยน
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe(); // ทำการยกเลิกการ subscribe เมื่อ component ถูกทำลาย
+    }
   }
 
   loadTasks() {
@@ -55,16 +74,25 @@ export class TaskListComponent implements OnInit {
   get completedTasks() {
     return this.tasks.filter(task => task.status === 'completed');
   }
+
+  isCreating = false;
+
   openCreateTaskDialog() {
-    const dialogRef = this.dialog.open(CreateTaskDialogComponent, {
-      width: '300px'
+    this.isCreating = true;
+    const dialogRef = this.dialog.open(TaskFormComponent, {
+      width: '4000px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.taskService.createTask(result).subscribe(() => {
-          this.loadTasks();  // รีเฟรชรายการ task
-        });
+    dialogRef.afterClosed().subscribe({
+      next: (result) => {
+        console.log('result', result);
+
+        if (result.action === 'success') { // ตรวจสอบค่าที่ส่งกลับมาจาก dialog
+          this.loadTasks();
+          this.isCreating = false;
+        } else {
+          this.isCreating = false;
+        }
       }
     });
   }

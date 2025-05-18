@@ -1,49 +1,11 @@
-/*.task-container {*/
-/*  display: flex;*/
-/*  justify-content: space-between;*/
-/*  margin: 20px;*/
-/*}*/
-
-/*.task-list {*/
-/*  width: 30%;*/
-/*  padding: 10px;*/
-/*  border: 1px solid #ccc;*/
-/*  min-height: 300px;*/
-/*}*/
-
-/*.task-item {*/
-/*  padding: 10px;*/
-/*  margin: 5px 0;*/
-/*  border: 1px solid #ccc;*/
-/*  background-color: #f9f9f9;*/
-/*  cursor: move;*/
-/*}*/
-
-/*h2 {*/
-/*  text-align: center;*/
-/*}*/
-
-/*.task-list {*/
-/*  min-height: 200px;*/
-/*  border: 1px dashed #ccc;*/
-/*  padding: 10px;*/
-/*  margin: 10px 0;*/
-/*}*/
-
-/*.task-card {*/
-/*  margin: 5px 0;*/
-/*  padding: 10px;*/
-/*  background: #f5f5f5;*/
-/*  cursor: move;*/
-/*}*/
-
-/*.task-card:hover {*/
-/*  background: #e0e0e0;*/
-/*}*/
-
 .task-board-container {
   padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  /* ✅ เพิ่ม */
+  display: flex;
+  flex-direction: column;
 }
 
 .board-header {
@@ -56,18 +18,21 @@
 .status-columns-container {
   display: flex;
   gap: 16px;
-  height: calc(100% - 80px);
+
+  flex-grow: 1;
 }
+
 
 .status-column {
   flex: 1;
   background: #f5f5f5;
   border-radius: 8px;
   padding: 16px;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto; /* ✅ scroll ได้ทั้ง column */
 }
+
 
 .column-header {
   display: flex;
@@ -86,8 +51,16 @@
 }
 
 .task-list {
-  flex: 1;
   overflow-y: auto;
+  max-height: calc(100vh - 180px); /* คงไว้ก็ได้ */
+  padding-bottom: 40px; /* เว้นขอบล่าง */
+}
+
+
+@media (max-width: 768px) {
+  .task-list {
+    padding-bottom: 40px; /* เพิ่มช่องว่างมากขึ้นใน mobile */
+  }
 }
 
 .task-card {

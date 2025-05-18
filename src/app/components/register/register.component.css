@@ -1,9 +1,20 @@
 .register-container {
+  background-color: rgba(251, 217, 186, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 60px;
+  max-width: fit-content;
+  justify-self: center;
+}
+
+.register-form {
   max-width: 400px;
-  margin: 2rem auto;
+  /*margin: 2rem auto;*/
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 h2 {
@@ -46,6 +57,12 @@ button {
 .login-link {
   text-align: center;
   margin-top: 1rem;
+}
+
+.login-link a {
+  color: #f0622c;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .alert {

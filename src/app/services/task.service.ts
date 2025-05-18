@@ -17,7 +17,7 @@ export class TaskService {
     return this.http.get(this.apiUrl);
   }
 
-  getTask(id: string): Observable<any> {
+  getTask(id: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 

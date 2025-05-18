@@ -17,7 +17,7 @@ export interface User {
 })
 export class UserService {
 
-  private apiUrl = `${environment.apiBaseUrlAPI}/user`;
+  private apiUrl = `${environment.apiBaseUrlAPI}/users`;
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -28,7 +28,7 @@ export class UserService {
 
   // ดึงข้อมูลผู้ใช้ทั้งหมดจาก API
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/users`)
+    return this.http.get<User[]>(`${this.apiUrl}`)
       .pipe(
         tap(users => console.log('Fetched users:', users))
       );
@@ -38,7 +38,7 @@ export class UserService {
   loadCurrentUser(): void {
     const token = localStorage.getItem('token');
     if (token) {
-      this.http.get<User>(`${this.apiUrl}/users/me`, {
+      this.http.get<User>(`${this.apiUrl}/me`, {
         headers: { Authorization: `Bearer ${token}` }
       }).subscribe({
         next: (user) => this.currentUserSubject.next(user),

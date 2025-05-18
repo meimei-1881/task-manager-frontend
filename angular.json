@@ -8,19 +8,21 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "browser": "src/main.ts",  // กำหนด entry point สำหรับ browser
-      "server": "src/main.server.ts",  // กำหนด entry point สำหรับ server (ถ้าใช้ SSR)
+      "browser": "src/main.ts",
+      "server": "src/main.server.ts",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/task-manager-frontend",
             "index": "src/index.html",
-            "browser": "src/main.ts",  // ระบุอีกครั้งใน options
-            "server": "src/main.server.ts",  // สำหรับ SSR
+            "browser": "src/main.ts",
+            "server": "src/main.server.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
