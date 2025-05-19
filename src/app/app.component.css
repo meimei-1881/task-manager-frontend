@@ -13,9 +13,9 @@ body, html {
 }
 
 .navbar {
-  background-color: #f8f9fa;
   padding: 1rem 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: cornsilk;
 }
 
 .nav-links {
@@ -88,3 +88,22 @@ main {
   overflow: hidden;
 }
 
+.logout-btn.floating {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 30px;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+  display: flex;
+  align-items: center;
+}
+
+.logout-btn.floating:hover {
+  background-color: #c0392b;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.logout-text {
+  font-weight: 500;
+}

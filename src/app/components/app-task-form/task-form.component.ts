@@ -19,10 +19,10 @@ import {map} from 'rxjs';
 })
 export class TaskFormComponent implements OnInit {
   taskForm: FormGroup;
-  users: any[] = [];
   isEditMode = false;
   currentTask: any;
   isLoading = false; // เพิ่ม state สำหรับการโหลด
+  users: any[] = [];
   userMap: { [id: string]: any } = {};  // กำหนด map ที่ใช้เก็บผู้ใช้ตาม ID
 
   constructor(

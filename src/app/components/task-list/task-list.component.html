@@ -2,7 +2,8 @@
   <header class="board-header">
     <h1>Task Management Board</h1>
     <button mat-raised-button color="primary" (click)="openCreateTaskDialog()">
-      <mat-icon>add</mat-icon> Create New Task
+      <mat-icon>add</mat-icon>
+      Create New Task
     </button>
   </header>
 
@@ -17,23 +18,27 @@
         <span class="task-count">{{ getTasksByStatus('todo').length }} tasks</span>
       </div>
 
-      <div class="task-list" *ngIf="getTasksByStatus('todo').length > 0">
-        <div class="task-card"
-             *ngFor="let task of getTasksByStatus('todo')"
-             cdkDrag
-             [cdkDragData]="task"
-             (click)="openTaskDetailDialog(task)">
-          <div class="task-content">
-            <h3>{{ task.name }}</h3>
-            <p class="task-description">{{ task.description || 'No description' }}</p>
-            <div class="task-meta">
-              <span class="priority-badge" [ngClass]="'priority-' + (task.priority || 'medium')">
-                {{ task.priority || 'Medium' }}
-              </span>
-              <span class="due-date" *ngIf="task.dueDate">
-                <mat-icon>event</mat-icon>
-                {{ task.dueDate | date }}
-              </span>
+      <div class="task-list-scroll-container">
+        <div class="task-list">
+          <div class="task-card"
+               *ngFor="let task of getTasksByStatus('todo')"
+               cdkDrag
+               [cdkDragData]="task"
+               (click)="openTaskDetailDialog(task)">
+            <div class="task-content">
+              <h3 class="task-title">{{ task.name }}</h3>
+              <p class="task-description">{{ task.description || 'No description' }}</p>
+              <div class="task-meta">
+                <div class="meta-row">
+    <span class="priority-badge" [ngClass]="'priority-' + (task.priority || 'medium')">
+      {{ task.priority || 'Medium' }}
+    </span>
+                  <div class="assignee-info" *ngIf="task.assigned_to_id">
+                    <mat-icon class="assignee-icon">person</mat-icon>
+                    <span class="assignee-name">{{ getAssigneeName(task.assigned_to_id) }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -45,33 +50,36 @@
       </div>
     </div>
 
-    <!-- IN PROGRESS Column -->
     <div class="status-column" cdkDropList
          id="in-progress"
          [cdkDropListConnectedTo]="['todo', 'completed']"
          (cdkDropListDropped)="onTaskDropped($event)">
       <div class="column-header">
-        <h2>In Progress</h2>
+        <h2>In progress</h2>
         <span class="task-count">{{ getTasksByStatus('in-progress').length }} tasks</span>
       </div>
 
-      <div class="task-list" *ngIf="getTasksByStatus('in-progress').length > 0">
-        <div class="task-card"
-             *ngFor="let task of getTasksByStatus('in-progress')"
-             cdkDrag
-             [cdkDragData]="task"
-             (click)="openTaskDetailDialog(task)">
-          <div class="task-content">
-            <h3>{{ task.name }}</h3>
-            <p class="task-description">{{ task.description || 'No description' }}</p>
-            <div class="task-meta">
-              <span class="priority-badge" [ngClass]="'priority-' + (task.priority || 'medium')">
-                {{ task.priority || 'Medium' }}
-              </span>
-              <span class="due-date" *ngIf="task.dueDate">
-                <mat-icon>event</mat-icon>
-                {{ task.dueDate | date }}
-              </span>
+      <div class="task-list-scroll-container">
+        <div class="task-list">
+          <div class="task-card"
+               *ngFor="let task of getTasksByStatus('in-progress')"
+               cdkDrag
+               [cdkDragData]="task"
+               (click)="openTaskDetailDialog(task)">
+            <div class="task-content">
+              <h3 class="task-title">{{ task.name }}</h3>
+              <p class="task-description">{{ task.description || 'No description' }}</p>
+              <div class="task-meta">
+                <div class="meta-row">
+    <span class="priority-badge" [ngClass]="'priority-' + (task.priority || 'medium')">
+      {{ task.priority || 'Medium' }}
+    </span>
+                  <div class="assignee-info" *ngIf="task.assigned_to_id">
+                    <mat-icon class="assignee-icon">person</mat-icon>
+                    <span class="assignee-name">{{ getAssigneeName(task.assigned_to_id) }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -79,11 +87,10 @@
 
       <div class="empty-state" *ngIf="getTasksByStatus('in-progress').length === 0">
         <mat-icon>hourglass_empty</mat-icon>
-        <p>No tasks in progress</p>
+        <p>No tasks in this column</p>
       </div>
     </div>
 
-    <!-- COMPLETED Column -->
     <div class="status-column" cdkDropList
          id="completed"
          [cdkDropListConnectedTo]="['todo', 'in-progress']"
@@ -93,27 +100,27 @@
         <span class="task-count">{{ getTasksByStatus('completed').length }} tasks</span>
       </div>
 
-      <div class="task-list" *ngIf="getTasksByStatus('completed').length > 0">
-        <div class="task-card"
-             *ngFor="let task of getTasksByStatus('completed')"
-             cdkDrag
-             [cdkDragData]="task"
-             (click)="openTaskDetailDialog(task)">
-          <div class="task-content">
-            <h3>{{ task.name }}</h3>
-            <p class="task-description">{{ task.description || 'No description' }}</p>
-            <div class="task-meta">
-              <span class="priority-badge" [ngClass]="'priority-' + (task.priority || 'medium')">
-                {{ task.priority || 'Medium' }}
-              </span>
-              <span class="due-date" *ngIf="task.dueDate">
-                <mat-icon>event</mat-icon>
-                {{ task.dueDate | date }}
-              </span>
-              <span class="completed-badge">
-                <mat-icon>check_circle</mat-icon>
-                Completed
-              </span>
+      <div class="task-list-scroll-container">
+        <div class="task-list">
+          <div class="task-card"
+               *ngFor="let task of getTasksByStatus('completed')"
+               cdkDrag
+               [cdkDragData]="task"
+               (click)="openTaskDetailDialog(task)">
+            <div class="task-content">
+              <h3 class="task-title">{{ task.name }}</h3>
+              <p class="task-description">{{ task.description || 'No description' }}</p>
+              <div class="task-meta">
+                <div class="meta-row">
+    <span class="priority-badge" [ngClass]="'priority-' + (task.priority || 'medium')">
+      {{ task.priority || 'Medium' }}
+    </span>
+                  <div class="assignee-info" *ngIf="task.assigned_to_id">
+                    <mat-icon class="assignee-icon">person</mat-icon>
+                    <span class="assignee-name">{{ getAssigneeName(task.assigned_to_id) }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -121,8 +128,10 @@
 
       <div class="empty-state" *ngIf="getTasksByStatus('completed').length === 0">
         <mat-icon>check_circle_outline</mat-icon>
-        <p>No completed tasks</p>
+        <p>No tasks in this column</p>
       </div>
     </div>
+
+    <!-- Repeat for other status columns -->
   </div>
 </div>

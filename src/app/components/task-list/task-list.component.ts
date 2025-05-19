@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { TaskService } from '../../services/task.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {TaskService} from '../../services/task.service';
 import {CdkDrag, CdkDragDrop, CdkDropList} from '@angular/cdk/drag-drop';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {TaskDetailDialogComponent} from '../task-detail-dialog/task-detail-dialog.component';
-import { ChangeDetectorRef } from '@angular/core';
+import {ChangeDetectorRef} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {TaskFormComponent} from '../app-task-form/task-form.component';
 import {MatButton} from '@angular/material/button';
-import {Subscription} from 'rxjs';
+import {map, Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../../services/user.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 interface Task {
   ID: number;
@@ -37,11 +39,18 @@ export class TaskListComponent implements OnInit {
   tasks: any[] = [];
   private routeSub: Subscription = new Subscription();  // กำหนดค่าเริ่มต้นให้ routeSub
 
-  constructor(private taskService: TaskService, private dialog: MatDialog, private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute) {}
+  constructor(private taskService: TaskService, private dialog: MatDialog, private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private userService: UserService, private snackBar: MatSnackBar,
+  ) {
+  }
+
+  users: any[] = [];
+  userMap: { [id: string]: any } = {};  // กำหนด map ที่ใช้เก็บผู้ใช้ตาม ID
 
   ngOnInit() {
     // เรียกใช้ฟังก์ชันเพื่อโหลด tasks เมื่อเริ่มต้น
     this.loadTasks();
+    this.loadUsers();
+
 
     // ตรวจสอบ queryParams เพื่อรีเฟรชข้อมูล
     this.routeSub = this.activatedRoute.queryParams.subscribe(params => {
@@ -77,6 +86,11 @@ export class TaskListComponent implements OnInit {
 
   isCreating = false;
 
+  getAssigneeName(assigneeId: number): string {
+    const user = this.users.find(u => u.ID === assigneeId);
+    return user ? user.username : 'Unassigned';
+  }
+
   openCreateTaskDialog() {
     this.isCreating = true;
     const dialogRef = this.dialog.open(TaskFormComponent, {
@@ -98,11 +112,11 @@ export class TaskListComponent implements OnInit {
   }
 
 
-openTaskDetailDialog(task: any) {
+  openTaskDetailDialog(task: any) {
     console.log(task);
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '400px',
-      data: { task: task }  // ส่งข้อมูล Task ไปที่ Dialog
+      data: {task: task}  // ส่งข้อมูล Task ไปที่ Dialog
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -190,6 +204,29 @@ openTaskDetailDialog(task: any) {
   }
 
 
+  loadUsers(): void {
+    this.userService.getUsers().pipe(
+      map((users: any[]) => {
+        // สร้าง map ของ users โดยใช้ ID
+        this.userMap = users.reduce((map, user) => {
+          map[user.ID] = user;  // key: user.id, value: user object
+          return map;
+        }, {});
+        console.log('usermap : ', this.userMap)
+        return users;
+      })
+    ).subscribe(
+      (users) => {
+        this.users = users;  // สามารถใช้ this.users ต่อไปในการแสดงใน UI
+      },
+      (error) => {
+        console.error('Error loading users:', error);
+        this.snackBar.open('Failed to load users', 'Close', {
+          duration: 3000
+        });
+      }
+    );
+  }
 
 }
 

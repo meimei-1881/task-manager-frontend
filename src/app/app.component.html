@@ -5,27 +5,20 @@
     <div class="nav-links">
       <!-- แสดงเมนูเมื่อล็อกอินแล้ว -->
       <ng-container *ngIf="authService.isLoggedIn()">
-        <a routerLink="/tasks">
-          <i class="fas fa-tasks"></i> My Tasks
-        </a>
+<!--        <a routerLink="/tasks">-->
+<!--          <i class="fas fa-tasks"></i> My Tasks-->
+<!--        </a>-->
 
         <!-- เพิ่มปุ่ม Notification ตรงนี้ -->
         <app-notification-bell></app-notification-bell>
 
-        <button (click)="authService.logout()">
-          <i class="fas fa-sign-out-alt"></i> Logout
+        <button class="logout-btn floating" (click)="authService.logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="logout-text">Logout</span>
         </button>
+
       </ng-container>
 
-      <!-- แสดงเมนูเมื่อยังไม่ได้ล็อกอิน -->
-<!--      <ng-container *ngIf="!authService.isLoggedIn()">-->
-<!--        <a routerLink="/register">-->
-<!--          <i class="fas fa-user-plus"></i> Register-->
-<!--        </a>-->
-<!--        <a routerLink="/login">-->
-<!--          <i class="fas fa-sign-in-alt"></i> Login-->
-<!--        </a>-->
-<!--      </ng-container>-->
     </div>
   </nav>
 
